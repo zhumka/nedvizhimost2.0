@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - RealEstate</title>
+    {% load static %}
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1>RealEstate</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="/catalog">Каталог</a></li>
+                    <li><a href="/contact">Контакты</a></li>
+                    <li><a href="/login">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <section>
+            <h2>Регистрация</h2>
+            <form method="POST" action="/register/">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required placeholder="Введите имя пользователя">
+                </div>
+                <div class="form-group">
+                    <label for="email">Электронная почта:</label>
+                    <input type="email" id="email" name="email" required placeholder="Введите электронную почту">
+                </div>
+                <div class="form-group">
+                    <label for="password1">Пароль:</label>
+                    <input type="password" id="password1" name="password1" required placeholder="Введите пароль">
+                </div>
+                <div class="form-group">
+                    <label for="password2">Подтверждение пароля:</label>
+                    <input type="password" id="password2" name="password2" required placeholder="Подтвердите пароль">
+                </div>
+                <button type="submit" class="btn">Зарегистрироваться</button>
+            </form>
+            <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 RealEstate. Все права защищены.</p>
+    </footer>
+    {% load static %}
+    <script src="static/js/scripts.js"></script>
+</body>
+</html>

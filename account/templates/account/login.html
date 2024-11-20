@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - RealEstate</title>
+    {% load static %}
+    <link rel="stylesheet" href="static/account/css/auth.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1>RealEstate</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="/catalog">Каталог</a></li>
+                    <li><a href="/contact">Контакты</a></li>
+                    <li><a href="/register">Регистрация</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content">
+        <section>
+            <h2>Вход в Личный Кабинет</h2>
+            <form method="POST" action="/login/">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required placeholder="Введите имя пользователя">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="btn">Войти</button>
+            </form>
+            <p>Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 RealEstate. Все права защищены.</p>
+    </footer>
+    {% load static %}
+    <script src="static/account/js/scripts.js"></script>
+</body>
+</html>
