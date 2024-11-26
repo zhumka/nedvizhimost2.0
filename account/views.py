@@ -8,6 +8,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 User = get_user_model()
 
@@ -21,17 +22,17 @@ def register_view(request):
         # Проверка на пустые поля
         if not username or not email or not password1 or not password2:
             messages.error(request, "Все поля обязательны для заполнения.")
-            return render(request, 'account/register.html')
+            return render(request, 'account/register.html', {'username': username, 'email': email})
 
         # Проверка на совпадение паролей
         if password1 != password2:
             messages.error(request, "Пароли не совпадают.")
-            return render(request, 'account/register.html')
+            return render(request, 'account/register.html', {'username': username, 'email': email})
 
         # Проверка сложности пароля (можно добавить больше проверок по необходимости)
         if len(password1) < 8:
             messages.error(request, "Пароль должен быть не менее 8 символов.")
-            return render(request, 'account/register.html')
+            return render(request, 'account/register.html', {'username': username, 'email': email})
 
         # Создание пользователя
         try:
@@ -40,7 +41,7 @@ def register_view(request):
             user.save()
         except Exception as e:
             messages.error(request, f"Ошибка при создании пользователя: {e}")
-            return render(request, 'account/register.html')
+            return render(request, 'account/register.html', {'username': username, 'email': email})
 
         # Отправка активационного письма
         current_site = get_current_site(request)
@@ -57,10 +58,10 @@ def register_view(request):
             email_message.send()
         except Exception as e:
             messages.error(request, f"Ошибка при отправке письма: {e}")
-            return render(request, 'account/register.html')
+            return render(request, 'account/register.html', {'username': username, 'email': email})
 
         messages.success(request, "Регистрация прошла успешно! Проверьте свою почту для подтверждения аккаунта.")
-        return redirect('login')  # Перенаправление на страницу логина
+        return redirect('activation')  # Перенаправление на страницу логина
 
     return render(request, 'account/register.html')
 
@@ -79,10 +80,10 @@ def activate(request, uidb64, token):
         user.save()
 
         login(request, user)
-        return redirect(reverse('login'))
+        return redirect(reverse('activated'))
     else:
         messages.error(request, 'Срок действия ссылки истек или произошла ошибка.')
-        return redirect('activation_complete')
+        return redirect('activation/complete')
 
 #Вьюшка логина
 def login_view(request):
@@ -99,7 +100,10 @@ def login_view(request):
 
     return render(request, 'account/login.html')
 
-
+# проифль пользователя
+@login_required
+def profile_view(request):
+    return render(request, 'account/profile.html')
 
 # Страница логаута
 def logout_view(request):
@@ -107,9 +111,36 @@ def logout_view(request):
     messages.success(request, 'Вы вышли из системы.')
     return redirect('home')  # Перенаправление на страницу логина
 
-#?
+# удаление аккаунта из системы
+@login_required
+def delete_account(request):
+    if request.method == "POST":
+        # Удаляем пользователя
+        user = request.user
+        user.delete()  # Полное удаление
+        messages.success(request, "Ваш аккаунт успешно удален.")
+        logout(request)
+        return redirect("home")  # Перенаправляем на главную страницу
+
+    return render(request, "account/delete_account.html")
+
+# деактивация аккаунта в системе
+@login_required
+def deactivate_account(request):
+    if request.method == "POST":
+        user = request.user
+        user.is_active = False
+        user.save()  # Деактивация
+        messages.success(request, "Ваш аккаунт деактивирован. Вы можете восстановить его позже.")
+        logout(request)
+        return redirect("home")
+
+    return render(request, "account/deactivate_account.html")
+
+
+#страница с сообщением про почту
 def activation_view(request):
-    return render(request, 'account/activation_complete.html')
-#?
+    return render(request, 'account/email_sent.html')
+#успешная активация аккаунта
 def activation_complete_view(request):
-    return render(request, 'account/active.html')
+    return render(request, 'account/activation_complete.html')

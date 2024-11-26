@@ -1,99 +1,84 @@
-/*стили иконки профиля в главной странице*/
-/* Блок "Личный кабинет" с аватаркой */
-.profile-icon {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-    vertical-align: middle;
-}
-
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.profile-block {
+/* Центрирование формы */
+.form-container {
     display: flex;
+    justify-content: center;
     align-items: center;
-    cursor: pointer;
-    padding: 10px 15px;
-    background-color: #005599;
+    min-height: calc(100vh - 100px); /* Учитываем высоту header и footer */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.register-form {
+    background: #f9f9f9;
+    padding: 30px;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
-.profile-block:hover {
-    background-color: #007acc;
-}
-
-.profile-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-    vertical-align: middle;
-}
-
-/* Выпадающее меню */
-.dropdown-menu {
-    display: block;
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 0;
-    width: 100%; /* Совпадает по ширине с "Личный кабинет" */
-    background-color: #005599;
-    border-radius: 8px;
-    list-style: none;
-    padding: 10px 0;
-    margin: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
 }
 
-.dropdown-menu li {
-    margin: 0;
-    padding: 0;
+.register-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
 }
 
-.dropdown-menu a {
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
     display: block;
-    padding: 10px 15px;
-    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    display: inline-block;
+    background: #007bff;
     color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+p {
+    margin-top: 15px;
     font-size: 14px;
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
+    color: #666;
 }
 
-.dropdown-menu a:hover {
-    background-color: #007acc;
+p a {
+    color: #007bff;
+    text-decoration: none;
 }
 
-/* Показ меню при наведении */
-.profile-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+p a:hover {
+    text-decoration: underline;
 }
+
+
 
 
 /* Общие стили */
-.profile-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-    vertical-align: middle;
-}
-
-
 body {
     margin: 0;
     padding: 0;
@@ -227,4 +212,3 @@ body {
     padding: 10px 0;
     margin-top: 20px;
 }
-
